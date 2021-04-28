@@ -27,7 +27,14 @@ const Players = ({ players }) => {
                             )
                             .map(player => (
                                 <li key={player.id}>
-                                    <Card>{player.fields.name}</Card>
+                                    <Card>
+                                        {player.fields.avatar && (
+                                            <img
+                                                src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ff/${player.fields.avatar}_medium.jpg`}
+                                            />
+                                        )}
+                                        <h3>{player.fields.name}</h3>
+                                    </Card>
                                 </li>
                             ))}
                     </ul>
