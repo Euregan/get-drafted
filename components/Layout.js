@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
+import Checkbox from '../components/Checkbox'
 
 const Layout = ({ children }) => {
   const [crt, setCrt] = useState(true)
@@ -38,10 +39,7 @@ const Layout = ({ children }) => {
             </li>
           </ul>
         </nav>
-        <label>
-          CRT
-          <input type="checkbox" checked={crt} onChange={() => setCrt(!crt)} />
-        </label>
+        <Checkbox label="CRT" value={crt} onChange={setCrt} />
       </header>
       <main className={crt && 'crt'}>{children}</main>
       <style jsx>{`

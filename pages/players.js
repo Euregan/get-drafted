@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Layout from '../components/Layout'
 import Card from '../components/Card'
 import LargePlayer from '../components/LargePlayer'
+import Checkbox from '../components/Checkbox'
 
 const Players = ({ players }) => {
   const [nameFilter, setNameFilter] = useState('')
@@ -21,30 +22,21 @@ const Players = ({ players }) => {
               onChange={event => setNameFilter(event.target.value)}
             />
           </label>
-          <label>
-            Decking
-            <input
-              type="checkbox"
-              checked={deckingFilter}
-              onChange={() => setDeckingFilter(!deckingFilter)}
-            />
-          </label>
-          <label>
-            Player
-            <input
-              type="checkbox"
-              checked={playerFilter}
-              onChange={() => setPlayerFilter(!playerFilter)}
-            />
-          </label>
-          <label>
-            Substitute
-            <input
-              type="checkbox"
-              checked={substituteFilter}
-              onChange={() => setSubstituteFilter(!substituteFilter)}
-            />
-          </label>
+          <Checkbox
+            label="Decking"
+            value={deckingFilter}
+            onChange={setDeckingFilter}
+          />
+          <Checkbox
+            label="Player"
+            value={playerFilter}
+            onChange={setPlayerFilter}
+          />
+          <Checkbox
+            label="Substitute"
+            value={substituteFilter}
+            onChange={setSubstituteFilter}
+          />
         </aside>
         <section>
           <ul className="players">
