@@ -3,12 +3,14 @@ import Layout from '../components/Layout'
 import Card from '../components/Card'
 import LargePlayer from '../components/LargePlayer'
 import Checkbox from '../components/Checkbox'
+import Select from '../components/Select'
 
-const Players = ({ players }) => {
+const Players = ({ players, weapons }) => {
   const [nameFilter, setNameFilter] = useState('')
   const [deckingFilter, setDeckingFilter] = useState(false)
   const [playerFilter, setPlayerFilter] = useState(false)
   const [substituteFilter, setSubstituteFilter] = useState(false)
+  const [weaponsFilter, setWeaponsFilter] = useState([])
 
   return (
     <Layout>
@@ -37,6 +39,12 @@ const Players = ({ players }) => {
             value={substituteFilter}
             onChange={setSubstituteFilter}
           />
+          <Select
+            label="Weapons"
+            options={weapons}
+            values={weaponsFilter}
+            onChange={setWeaponsFilter}
+          />
         </aside>
         <section>
           <ul className="players">
@@ -49,6 +57,13 @@ const Players = ({ players }) => {
               .filter(player => !deckingFilter || player.decking)
               .filter(player => !playerFilter || player.main)
               .filter(player => !substituteFilter || player.substitute)
+              .filter(
+                player =>
+                  weaponsFilter.length === 0 ||
+                  player.weapons.some(weapon =>
+                    weaponsFilter.map(weapon => weapon.id).includes(weapon.id)
+                  )
+              )
               .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
               .map(player => (
                 <li key={player.id}>
@@ -78,6 +93,11 @@ const Players = ({ players }) => {
             display: flex;
             flex-direction: column;
             gap: var(--padding);
+            width: 20rem;
+          }
+
+          input {
+            width: 100%;
           }
         `}</style>
       </div>
@@ -114,7 +134,8 @@ export async function getStaticProps() {
         weapons: (player.fields.weapons || []).map(id =>
           weapons.find(weapon => weapon.id === id)
         )
-      }))
+      })),
+      weapons: weapons
     }
   }
 }
