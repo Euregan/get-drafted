@@ -1,12 +1,12 @@
 import Card from '../components/Card'
-import Team from '../components/Team'
+import SmallTeam from '../components/SmallTeam'
 
-const Match = ({ match }) => (
+const LargeMatch = ({ match }) => (
   <Card title={`${match.date} - ${match.maps[0].name}`}>
     <div className="match">
       {match.teams.length <= 1 && 'Previous matches not decided yet'}
-      {match.teams.length === 2 && <Team team={match.teams[0]} />}
-      {match.teams.length === 2 && <Team team={match.teams[1]} />}
+      {match.teams.length === 2 && <SmallTeam team={match.teams[0]} />}
+      {match.teams.length === 2 && <SmallTeam team={match.teams[1]} />}
     </div>
     <style jsx>{`
       .match {
@@ -18,4 +18,4 @@ const Match = ({ match }) => (
   </Card>
 )
 
-export default Match
+export default LargeMatch

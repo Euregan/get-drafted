@@ -1,6 +1,6 @@
 import Card from '../components/Card'
 
-const Player = ({ player }) => (
+const LargePlayer = ({ player }) => (
   <Card title={player.name}>
     <div className="player">
       <div className="main">
@@ -93,4 +93,4 @@ const Player = ({ player }) => (
   </Card>
 )
 
-export default Player
+export default LargePlayer

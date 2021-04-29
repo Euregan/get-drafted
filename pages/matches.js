@@ -1,6 +1,6 @@
 import ReactFlow from 'react-flow-renderer'
 import Layout from '../components/Layout'
-import Match from '../components/Match'
+import LargeMatch from '../components/LargeMatch'
 
 const matches = [
   {
@@ -34,7 +34,7 @@ const Matches = ({ matches }) => (
         .sort((a, b) => new Date(a.date) > new Date(b.date))
         .map(match => (
           <li key={match.id}>
-            <Match match={match} />
+            <LargeMatch match={match} />
           </li>
         ))}
     </ul>
