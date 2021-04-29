@@ -8,11 +8,12 @@ const backgroundToTextColor = color => {
 }
 
 const Card = ({ title, color, children }) => (
-  <div className="card">
+  <div className="card" style={{ borderColor: color }}>
     {title && (
       <div
         className="title"
         style={{
+          borderColor: color,
           backgroundColor: color,
           color: color && backgroundToTextColor(color)
         }}
