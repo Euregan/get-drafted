@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Layout from '../components/Layout'
 import Card from '../components/Card'
-import Player from '../components/Player'
+import LargePlayer from '../components/LargePlayer'
 
 const Players = ({ players }) => {
   const [nameFilter, setNameFilter] = useState('')
@@ -60,7 +60,7 @@ const Players = ({ players }) => {
               .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
               .map(player => (
                 <li key={player.id}>
-                  <Player player={player} />
+                  <LargePlayer player={player} />
                 </li>
               ))}
           </ul>
