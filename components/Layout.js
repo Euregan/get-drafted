@@ -17,15 +17,30 @@ const Layout = ({ children }) => {
               </Link>
             </li>
             <li>
+              <Link href="/information">
+                <a>Information</a>
+              </Link>
+            </li>
+            <li>
               <Link href="/players">
                 <a>Players</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/teams">
+                <a>Teams</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/matches">
+                <a>Matches</a>
               </Link>
             </li>
           </ul>
         </nav>
         <label>
           CRT
-          <input type="checkbox" value={crt} onChange={() => setCrt(!crt)} />
+          <input type="checkbox" checked={crt} onChange={() => setCrt(!crt)} />
         </label>
       </header>
       <main className={crt && 'crt'}>{children}</main>
