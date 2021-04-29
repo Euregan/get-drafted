@@ -1,40 +1,85 @@
+import { useState } from 'react'
 import Link from 'next/link'
 
-const Layout = ({ children }) => (
-  <>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <Link href="/">
-              <a>
-                <h1>Get Drafted</h1>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/players">
-              <a>Players</a>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    <main>{children}</main>
-    <style jsx>{`
-      nav > ul {
-        display: flex;
-      }
+const Layout = ({ children }) => {
+  const [crt, setCrt] = useState(true)
 
-      h1 {
-        color: var(--accent-color);
-      }
+  return (
+    <>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link href="/">
+                <a>
+                  <h1>get Drafted</h1>
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/players">
+                <a>Players</a>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <label>
+          CRT
+          <input type="checkbox" value={crt} onChange={() => setCrt(!crt)} />
+        </label>
+      </header>
+      <main className={crt && 'crt'}>{children}</main>
+      <style jsx>{`
+        header {
+          padding: var(--padding);
+          margin-bottom: var(--margin);
+          border-bottom: var(--border);
 
-      main {
-        max-width: 70rem;
-      }
-    `}</style>
-    <style>{`
+          display: flex;
+          justify-content: space-between;
+        }
+
+        nav > ul {
+          display: flex;
+          gap: var(--margin);
+          align-items: baseline;
+        }
+
+        h1 {
+          color: var(--accent-color);
+        }
+
+        main {
+          max-width: 70rem;
+          margin: auto;
+        }
+
+        /* CRT effect */
+        main.crt::before {
+          content: ' ';
+          display: block;
+          position: fixed;
+          height: 100vh;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          background: linear-gradient(
+              rgba(18, 16, 16, 0) 50%,
+              rgba(0, 0, 0, 0.2) 50%
+            ),
+            linear-gradient(
+              90deg,
+              rgba(255, 0, 0, 0.06),
+              rgba(0, 255, 0, 0.02),
+              rgba(0, 0, 255, 0.06)
+            );
+          z-index: 2;
+          background-size: 100% 2px, 3px 100%;
+          pointer-events: none;
+        }
+      `}</style>
+      <style>{`
         body {
             background: linear-gradient(to left, #0b0b2b, #210c1e);
             background-color: black;
@@ -53,31 +98,17 @@ const Layout = ({ children }) => (
             --red: #ff4b2c;
         }
 
-        /* CRT effect */
-        body::before {
-          content: ' ';
-          display: block;
-          position: fixed;
-          height: 100vh;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          background: linear-gradient(
-              rgba(18, 16, 16, 0) 50%,
-              rgba(0, 0, 0, 0.25) 50%
-            ),
-            linear-gradient(
-              90deg,
-              rgba(255, 0, 0, 0.06),
-              rgba(0, 255, 0, 0.02),
-              rgba(0, 0, 255, 0.06)
-            );
-          z-index: 2;
-          background-size: 100% 2px, 3px 100%;
-          pointer-events: none;
+        label,
+        [type='checkbox'] {
+          cursor: pointer;
         }
 
+        label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--padding);
+        }
 
         @font-face {
           font-family: 'Fira Code';
@@ -143,7 +174,8 @@ const Layout = ({ children }) => (
             color: var(--text-color);
         }
     `}</style>
-  </>
-)
+    </>
+  )
+}
 
 export default Layout

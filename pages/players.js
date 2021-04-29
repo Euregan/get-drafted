@@ -4,16 +4,46 @@ import Card from '../components/Card'
 
 const Players = ({ players }) => {
   const [nameFilter, setNameFilter] = useState('')
+  const [deckingFilter, setDeckingFilter] = useState(false)
+  const [playerFilter, setPlayerFilter] = useState(false)
+  const [substituteFilter, setSubstituteFilter] = useState(false)
 
   return (
     <Layout>
       <div className="players-page">
         <aside>
-          <input
-            type="text"
-            value={nameFilter}
-            onChange={event => setNameFilter(event.target.value)}
-          />
+          <label>
+            Name
+            <input
+              type="text"
+              value={nameFilter}
+              onChange={event => setNameFilter(event.target.value)}
+            />
+          </label>
+          <label>
+            Decking
+            <input
+              type="checkbox"
+              value={deckingFilter}
+              onChange={() => setDeckingFilter(!deckingFilter)}
+            />
+          </label>
+          <label>
+            Player
+            <input
+              type="checkbox"
+              value={playerFilter}
+              onChange={() => setPlayerFilter(!playerFilter)}
+            />
+          </label>
+          <label>
+            Substitute
+            <input
+              type="checkbox"
+              value={substituteFilter}
+              onChange={() => setSubstituteFilter(!substituteFilter)}
+            />
+          </label>
         </aside>
         <section>
           <ul className="players">
@@ -23,6 +53,9 @@ const Players = ({ players }) => {
                   nameFilter === '' ||
                   player.name.toLowerCase().includes(nameFilter.toLowerCase())
               )
+              .filter(player => !deckingFilter || player.decking)
+              .filter(player => !playerFilter || player.main)
+              .filter(player => !substituteFilter || player.substitute)
               .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
               .map(player => (
                 <li key={player.id}>
@@ -152,6 +185,12 @@ const Players = ({ players }) => {
           }
 
           .weapons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--padding);
+          }
+
+          aside {
             display: flex;
             flex-direction: column;
             gap: var(--padding);
