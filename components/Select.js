@@ -57,6 +57,13 @@ const Select = ({ label, options, values, onChange }) => {
           padding-top: var(--padding);
           border-top: var(--border);
         }
+
+        // Medium devices (tablets, 992px and down)
+        @media (max-width: 992px) {
+          ul {
+            display: block;
+          }
+        }
       `}</style>
     </div>
   )

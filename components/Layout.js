@@ -39,7 +39,9 @@ const Layout = ({ children }) => {
             </li>
           </ul>
         </nav>
-        <Checkbox label="CRT" value={crt} onChange={setCrt} />
+        <div className="crt-checkbox">
+          <Checkbox label="CRT" value={crt} onChange={setCrt} />
+        </div>
       </header>
       <main className={crt && 'crt'}>{children}</main>
       <style jsx>{`
@@ -67,29 +69,55 @@ const Layout = ({ children }) => {
           margin: auto;
         }
 
-        /* CRT effect */
-        main.crt::before {
-          content: ' ';
-          display: block;
-          position: fixed;
-          height: 100vh;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          background: linear-gradient(
-              rgba(18, 16, 16, 0) 50%,
-              rgba(0, 0, 0, 0.2) 50%
-            ),
-            linear-gradient(
-              90deg,
-              rgba(255, 0, 0, 0.06),
-              rgba(0, 255, 0, 0.02),
-              rgba(0, 0, 255, 0.06)
-            );
-          z-index: 2;
-          background-size: 100% 2px, 3px 100%;
-          pointer-events: none;
+        // Tiny devices (phones, 575px and down)
+        @media (max-width: 575px) {
+          main {
+            margin-left: var(--padding);
+            margin-right: var(--padding);
+          }
+        }
+
+        // Small devices (tablets, 767px and down)
+        @media (max-width: 767px) {
+          .crt-checkbox {
+            display: none;
+          }
+        }
+
+        // Medium devices (tablets, 991px and down)
+        @media (max-width: 991px) {
+          main {
+            margin-left: var(--margin);
+            margin-right: var(--margin);
+          }
+        }
+
+        // Medium devices (tablets, 768px and up)
+        @media (min-width: 768px) {
+          /* CRT effect */
+          main.crt::before {
+            content: ' ';
+            display: block;
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.2) 50%
+              ),
+              linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.06),
+                rgba(0, 255, 0, 0.02),
+                rgba(0, 0, 255, 0.06)
+              );
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+          }
         }
       `}</style>
       <style>{`

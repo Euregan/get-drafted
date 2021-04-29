@@ -99,6 +99,25 @@ const Players = ({ players, weapons }) => {
           input {
             width: 100%;
           }
+
+          // Medium devices (tablets, 992px and down)
+          @media (max-width: 992px) {
+            aside {
+              width: 15.5rem;
+            }
+          }
+
+          // Tiny devices (phones, 575px and down)
+          @media (max-width: 575px) {
+            .players-page {
+              flex-direction: column;
+              align-items: stretch;
+            }
+
+            aside {
+              width: auto;
+            }
+          }
         `}</style>
       </div>
     </Layout>
