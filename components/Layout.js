@@ -67,6 +67,7 @@ const Layout = ({ children }) => {
         main {
           max-width: 70rem;
           margin: auto;
+          margin-bottom: var(--margin);
         }
 
         // Tiny devices (phones, 575px and down)
