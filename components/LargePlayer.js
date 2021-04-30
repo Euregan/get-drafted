@@ -2,7 +2,10 @@ import Card from '../components/Card'
 import Avatar from '../components/Avatar'
 
 const LargePlayer = ({ player }) => (
-  <Card title={player.name}>
+  <Card
+    title={player.name + (player.team ? ' - ' + player.team.name : '')}
+    color={player.team ? player.team.color : null}
+  >
     <div className="player">
       <div className="main">
         <Avatar player={player} size="large" />

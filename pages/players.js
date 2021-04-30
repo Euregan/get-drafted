@@ -125,12 +125,19 @@ const Players = ({ players, weapons }) => {
 }
 
 export async function getStaticProps() {
-  const [players, weapons] = await Promise.all([
+  const [players, weapons, teams] = await Promise.all([
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/players`, {
       headers: {
         Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
       }
-    }).then(res => res.json()),
+    })
+      .then(res => res.json())
+      .then(players =>
+        players.records.map(player => ({
+          ...player,
+          ...player.fields
+        }))
+      ),
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/weapons`, {
       headers: {
         Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
@@ -142,17 +149,31 @@ export async function getStaticProps() {
           ...weapon,
           ...weapon.fields
         }))
+      ),
+    fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/teams`, {
+      headers: {
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
+      }
+    })
+      .then(res => res.json())
+      .then(teams =>
+        teams.records.map(team => ({
+          ...team,
+          ...team.fields
+        }))
       )
   ])
 
   return {
     props: {
-      players: players.records.map(player => ({
+      players: players.map(player => ({
         ...player,
-        ...player.fields,
         weapons: (player.fields.weapons || []).map(id =>
           weapons.find(weapon => weapon.id === id)
-        )
+        ),
+        team: player.team
+          ? teams.find(team => team.id === player.team[0])
+          : null
       })),
       weapons: weapons
     }

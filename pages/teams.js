@@ -73,7 +73,8 @@ export async function getStaticProps() {
             ...player,
             weapons: (player.fields.weapons || []).map(id =>
               weapons.find(weapon => weapon.id === id)
-            )
+            ),
+            team: null
           }))
       }))
     }
