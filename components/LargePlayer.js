@@ -1,20 +1,11 @@
 import Card from '../components/Card'
+import Avatar from '../components/Avatar'
 
 const LargePlayer = ({ player }) => (
   <Card title={player.name}>
     <div className="player">
       <div className="main">
-        {player.avatar ? (
-          <img
-            className="avatar"
-            src={`https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ff/${player.avatar}_full.jpg`}
-          />
-        ) : (
-          <svg className="avatar avatar-substitute" viewBox="0 0 70 70">
-            <line x1="0" y1="0" x2="70" y2="70" />
-            <line x1="0" y1="70" x2="70" y2="0" />
-          </svg>
-        )}
+        <Avatar player={player} size="large" />
         <ul className="details">
           <li className={'detail ' + (player.decking ? 'true' : 'false')}>
             <span className="label">Decking</span>
@@ -47,21 +38,6 @@ const LargePlayer = ({ player }) => (
         display: flex;
         gap: var(--padding);
         align-items: flex-start;
-      }
-
-      .avatar {
-        height: 70px;
-        width: 70px;
-        box-sizing: border-box;
-      }
-
-      .avatar-substitute {
-        border: var(--border);
-      }
-
-      .avatar-substitute line {
-        stroke-width: var(--border-width);
-        stroke: var(--border-color);
       }
 
       .details {
