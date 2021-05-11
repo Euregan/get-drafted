@@ -1,7 +1,7 @@
-import { Page } from 'dystopia'
+import Layout from '../components/Layout'
 
 const NotFound = () => (
-  <Page>
+  <Layout>
     <div>404</div>
     <style jsx>{`
       div {
@@ -12,7 +12,7 @@ const NotFound = () => (
         font-size: 20rem;
       }
     `}</style>
-  </Page>
+  </Layout>
 )
 
 export default NotFound

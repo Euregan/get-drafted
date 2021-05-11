@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Page, Card, Flexbox, Checkbox, OptionList } from 'dystopia'
+import { Card, Flexbox, Checkbox, OptionList } from 'dystopia'
 import LargePlayer from '../components/LargePlayer'
+import Layout from '../components/Layout'
 
 const Players = ({ players, weapons }) => {
   const [nameFilter, setNameFilter] = useState('')
@@ -10,7 +11,7 @@ const Players = ({ players, weapons }) => {
   const [weaponsFilter, setWeaponsFilter] = useState([])
 
   return (
-    <Page>
+    <Layout>
       <div className="players-page">
         <aside>
           <Flexbox direction="column" gap="small">
@@ -109,7 +110,7 @@ const Players = ({ players, weapons }) => {
           }
         `}</style>
       </div>
-    </Page>
+    </Layout>
   )
 }
 

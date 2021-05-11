@@ -1,8 +1,9 @@
-import { Page, Flexbox } from 'dystopia'
+import { Flexbox } from 'dystopia'
 import LargeTeam from '../components/LargeTeam'
+import Layout from '../components/Layout'
 
 const Teams = ({ teams }) => (
-  <Page>
+  <Layout>
     <Flexbox direction="column" gap="large">
       {teams
         .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
@@ -12,7 +13,7 @@ const Teams = ({ teams }) => (
           </div>
         ))}
     </Flexbox>
-  </Page>
+  </Layout>
 )
 
 export async function getStaticProps() {

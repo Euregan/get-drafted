@@ -1,6 +1,7 @@
 import ReactFlow from 'react-flow-renderer'
-import { Page, Flexbox } from 'dystopia'
+import { Flexbox } from 'dystopia'
 import LargeMatch from '../components/LargeMatch'
+import Layout from '../components/Layout'
 
 const matches = [
   {
@@ -28,17 +29,17 @@ const matches = [
 ]
 
 const Matches = ({ matches }) => (
-  <Page>
+  <Layout>
     <Flexbox direction="column" gap="large">
       {matches
         .sort((a, b) => new Date(a.date) > new Date(b.date))
         .map((match) => (
-          <li key={match.id}>
+          <div key={match.id}>
             <LargeMatch match={match} />
-          </li>
+          </div>
         ))}
     </Flexbox>
-  </Page>
+  </Layout>
 )
 
 export async function getStaticProps() {
