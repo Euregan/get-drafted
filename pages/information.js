@@ -1,8 +1,7 @@
-import Layout from '../components/Layout'
-import Card from '../components/Card'
+import { Page, Card } from 'dystopia'
 
 const Information = () => (
-  <Layout>
+  <Page>
     <Card>
       <h3>Drafting</h3>
       <p>
@@ -168,7 +167,7 @@ const Information = () => (
         gap: var(--padding);
       }
     `}</style>
-  </Layout>
+  </Page>
 )
 
 export default Information

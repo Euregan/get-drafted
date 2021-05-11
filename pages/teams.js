@@ -1,83 +1,75 @@
-import Layout from '../components/Layout'
+import { Page, Flexbox } from 'dystopia'
 import LargeTeam from '../components/LargeTeam'
 
 const Teams = ({ teams }) => (
-  <Layout>
-    <ul className="teams">
+  <Page>
+    <Flexbox direction="column" gap="large">
       {teams
         .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
-        .map(team => (
-          <li key={team.id}>
+        .map((team) => (
+          <div key={team.id}>
             <LargeTeam team={team} />
-          </li>
+          </div>
         ))}
-      <style jsx>{`
-        .teams {
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          gap: var(--margin);
-        }
-      `}</style>
-    </ul>
-  </Layout>
+    </Flexbox>
+  </Page>
 )
 
 export async function getStaticProps() {
   const [teams, players, weapons] = await Promise.all([
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/teams`, {
       headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
-      }
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
+      },
     })
-      .then(res => res.json())
-      .then(teams =>
-        teams.records.map(team => ({
+      .then((res) => res.json())
+      .then((teams) =>
+        teams.records.map((team) => ({
           ...team,
-          ...team.fields
+          ...team.fields,
         }))
       ),
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/players`, {
       headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
-      }
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
+      },
     })
-      .then(res => res.json())
-      .then(players =>
-        players.records.map(player => ({
+      .then((res) => res.json())
+      .then((players) =>
+        players.records.map((player) => ({
           ...player,
-          ...player.fields
+          ...player.fields,
         }))
       ),
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/weapons`, {
       headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
-      }
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
+      },
     })
-      .then(res => res.json())
-      .then(weapons =>
-        weapons.records.map(weapon => ({
+      .then((res) => res.json())
+      .then((weapons) =>
+        weapons.records.map((weapon) => ({
           ...weapon,
-          ...weapon.fields
+          ...weapon.fields,
         }))
-      )
+      ),
   ])
 
   return {
     props: {
-      teams: teams.map(team => ({
+      teams: teams.map((team) => ({
         ...team,
         players: (team.players || [])
-          .map(id => players.find(player => player.id === id))
-          .map(player => ({
+          .map((id) => players.find((player) => player.id === id))
+          .map((player) => ({
             ...player,
-            weapons: (player.fields.weapons || []).map(id =>
-              weapons.find(weapon => weapon.id === id)
+            weapons: (player.fields.weapons || []).map((id) =>
+              weapons.find((weapon) => weapon.id === id)
             ),
-            team: null
-          }))
-      }))
-    }
+            team: null,
+          })),
+      })),
+    },
   }
 }
 

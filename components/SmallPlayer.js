@@ -1,17 +1,17 @@
-import Avatar from '../components/Avatar'
+import { Picture, Flexbox } from 'dystopia'
 
 const SmallPlayer = ({ player }) => (
-  <div className="player">
-    <Avatar player={player} size="small" />
-    <span>{player.name}</span>
-    <style jsx>{`
-      .player {
-        display: flex;
-        align-items: center;
-        gap: var(--padding);
+  <Flexbox direction="row" gap="small">
+    <Picture
+      source={
+        player.avatar
+          ? `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ff/${player.avatar}_full.jpg`
+          : null
       }
-    `}</style>
-  </div>
+      size="small"
+    />
+    <span>{player.name}</span>
+  </Flexbox>
 )
 
 export default SmallPlayer

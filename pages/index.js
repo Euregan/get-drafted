@@ -1,5 +1,5 @@
-import Layout from '../components/Layout'
+import { Page } from 'dystopia'
 
-const Home = () => <Layout></Layout>
+const Home = () => <Page></Page>
 
 export default Home

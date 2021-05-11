@@ -1,9 +1,6 @@
 import { useState } from 'react'
-import Layout from '../components/Layout'
-import Card from '../components/Card'
+import { Page, Card, Flexbox, Checkbox, OptionList } from 'dystopia'
 import LargePlayer from '../components/LargePlayer'
-import Checkbox from '../components/Checkbox'
-import Select from '../components/Select'
 
 const Players = ({ players, weapons }) => {
   const [nameFilter, setNameFilter] = useState('')
@@ -13,64 +10,66 @@ const Players = ({ players, weapons }) => {
   const [weaponsFilter, setWeaponsFilter] = useState([])
 
   return (
-    <Layout>
+    <Page>
       <div className="players-page">
         <aside>
-          <label>
-            Name
-            <input
-              type="text"
-              value={nameFilter}
-              onChange={event => setNameFilter(event.target.value)}
+          <Flexbox direction="column" gap="small">
+            <label>
+              Name
+              <input
+                type="text"
+                value={nameFilter}
+                onChange={(event) => setNameFilter(event.target.value)}
+              />
+            </label>
+            <Checkbox
+              label="Decking"
+              value={deckingFilter}
+              onChange={setDeckingFilter}
             />
-          </label>
-          <Checkbox
-            label="Decking"
-            value={deckingFilter}
-            onChange={setDeckingFilter}
-          />
-          <Checkbox
-            label="Player"
-            value={playerFilter}
-            onChange={setPlayerFilter}
-          />
-          <Checkbox
-            label="Substitute"
-            value={substituteFilter}
-            onChange={setSubstituteFilter}
-          />
-          <Select
-            label="Weapons"
-            options={weapons}
-            values={weaponsFilter}
-            onChange={setWeaponsFilter}
-          />
+            <Checkbox
+              label="Player"
+              value={playerFilter}
+              onChange={setPlayerFilter}
+            />
+            <Checkbox
+              label="Substitute"
+              value={substituteFilter}
+              onChange={setSubstituteFilter}
+            />
+            <OptionList
+              label="Weapons"
+              options={weapons}
+              values={weaponsFilter}
+              onChange={setWeaponsFilter}
+            />
+          </Flexbox>
         </aside>
         <section>
-          <ul className="players">
+          <Flexbox direction="column" gap="large">
             {players
               .filter(
-                player =>
+                (player) =>
                   nameFilter === '' ||
                   player.name.toLowerCase().includes(nameFilter.toLowerCase())
               )
-              .filter(player => !deckingFilter || player.decking)
-              .filter(player => !playerFilter || player.main)
-              .filter(player => !substituteFilter || player.substitute)
+              .filter((player) => !deckingFilter || player.decking)
+              .filter((player) => !playerFilter || player.main)
+              .filter((player) => !substituteFilter || player.substitute)
               .filter(
-                player =>
+                (player) =>
                   weaponsFilter.length === 0 ||
-                  player.weapons.some(weapon =>
-                    weaponsFilter.map(weapon => weapon.id).includes(weapon.id)
+                  player.weapons.some((weapon) =>
+                    weaponsFilter.map((weapon) => weapon.id).includes(weapon.id)
                   )
               )
               .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
-              .map(player => (
-                <li key={player.id}>
+              .map((player) => (
+                <div key={player.id}>
                   <LargePlayer player={player} />
-                </li>
+                </div>
               ))}
-          </ul>
+          </Flexbox>
         </section>
         <style jsx>{`
           .players-page {
@@ -82,17 +81,7 @@ const Players = ({ players, weapons }) => {
             flex-grow: 1;
           }
 
-          .players {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: var(--margin);
-          }
-
           aside {
-            display: flex;
-            flex-direction: column;
-            gap: var(--padding);
             width: 20rem;
           }
 
@@ -120,7 +109,7 @@ const Players = ({ players, weapons }) => {
           }
         `}</style>
       </div>
-    </Layout>
+    </Page>
   )
 }
 
@@ -128,55 +117,55 @@ export async function getStaticProps() {
   const [players, weapons, teams] = await Promise.all([
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/players`, {
       headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
-      }
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
+      },
     })
-      .then(res => res.json())
-      .then(players =>
-        players.records.map(player => ({
+      .then((res) => res.json())
+      .then((players) =>
+        players.records.map((player) => ({
           ...player,
-          ...player.fields
+          ...player.fields,
         }))
       ),
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/weapons`, {
       headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
-      }
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
+      },
     })
-      .then(res => res.json())
-      .then(weapons =>
-        weapons.records.map(weapon => ({
+      .then((res) => res.json())
+      .then((weapons) =>
+        weapons.records.map((weapon) => ({
           ...weapon,
-          ...weapon.fields
+          ...weapon.fields,
         }))
       ),
     fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/teams`, {
       headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`
-      }
+        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
+      },
     })
-      .then(res => res.json())
-      .then(teams =>
-        teams.records.map(team => ({
+      .then((res) => res.json())
+      .then((teams) =>
+        teams.records.map((team) => ({
           ...team,
-          ...team.fields
+          ...team.fields,
         }))
-      )
+      ),
   ])
 
   return {
     props: {
-      players: players.map(player => ({
+      players: players.map((player) => ({
         ...player,
-        weapons: (player.fields.weapons || []).map(id =>
-          weapons.find(weapon => weapon.id === id)
+        weapons: (player.fields.weapons || []).map((id) =>
+          weapons.find((weapon) => weapon.id === id)
         ),
         team: player.team
-          ? teams.find(team => team.id === player.team[0])
-          : null
+          ? teams.find((team) => team.id === player.team[0])
+          : null,
       })),
-      weapons: weapons
-    }
+      weapons: weapons,
+    },
   }
 }
 

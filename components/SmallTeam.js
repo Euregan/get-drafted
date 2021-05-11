@@ -1,23 +1,16 @@
-import Card from '../components/Card'
+import { Card, Flexbox } from 'dystopia'
 import SmallPlayer from '../components/SmallPlayer'
 
 const SmallTeam = ({ team }) => (
   <Card title={team.name} color={team.color}>
-    <ul className="team">
+    <Flexbox direction="column" gap="small">
       {team.players.length === 0 && 'Team composition to be decided'}
-      {team.players.map(player => (
-        <li key={player.id}>
+      {team.players.map((player) => (
+        <div key={player.id}>
           <SmallPlayer player={player} />
-        </li>
+        </div>
       ))}
-    </ul>
-    <style jsx>{`
-      .team {
-        display: flex;
-        flex-direction: column;
-        gap: var(--padding);
-      }
-    `}</style>
+    </Flexbox>
   </Card>
 )
 

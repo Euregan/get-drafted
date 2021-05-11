@@ -1,14 +1,20 @@
-import Card from '../components/Card'
-import Avatar from '../components/Avatar'
+import { Card, Picture, Flexbox } from 'dystopia'
 
 const LargePlayer = ({ player }) => (
   <Card
     title={player.name + (player.team ? ' - ' + player.team.name : '')}
     color={player.team ? player.team.color : null}
   >
-    <div className="player">
-      <div className="main">
-        <Avatar player={player} size="large" />
+    <Flexbox direction="column" gap="small">
+      <Flexbox direction="row" gap="small">
+        <Picture
+          source={
+            player.avatar
+              ? `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/ff/${player.avatar}_full.jpg`
+              : null
+          }
+          size="large"
+        />
         <ul className="details">
           <li className={'detail ' + (player.decking ? 'true' : 'false')}>
             <span className="label">Decking</span>
@@ -23,26 +29,14 @@ const LargePlayer = ({ player }) => (
             <span className="data">{player.substitute ? 'true' : 'false'}</span>
           </li>
         </ul>
-      </div>
-      <ul className="weapons">
-        {player.weapons.map(weapon => (
-          <li key={weapon.id}>{weapon.name}</li>
+      </Flexbox>
+      <Flexbox direction="column" gap="small">
+        {player.weapons.map((weapon) => (
+          <div key={weapon.id}>{weapon.name}</div>
         ))}
-      </ul>
-    </div>
+      </Flexbox>
+    </Flexbox>
     <style jsx>{`
-      .player {
-        display: flex;
-        flex-direction: column;
-        gap: var(--padding);
-      }
-
-      .main {
-        display: flex;
-        gap: var(--padding);
-        align-items: flex-start;
-      }
-
       .details {
         display: flex;
         flex-direction: column;
@@ -61,12 +55,6 @@ const LargePlayer = ({ player }) => (
 
       .false .data {
         color: var(--red);
-      }
-
-      .weapons {
-        display: flex;
-        flex-direction: column;
-        gap: var(--padding);
       }
     `}</style>
   </Card>
