@@ -1,77 +1,38 @@
-import { Flexbox } from 'dystopia'
+import { useState, useEffect } from 'react'
+import { Flexbox, Loading } from 'dystopia'
 import LargeTeam from '../components/LargeTeam'
 import Layout from '../components/Layout'
 
-const Teams = ({ teams }) => (
-  <Layout>
-    <Flexbox direction="column" gap="large">
-      {teams
-        .sort((a, b) => a.fields.name.localeCompare(b.fields.name))
-        .map((team) => (
-          <div key={team.id}>
-            <LargeTeam team={team} />
-          </div>
-        ))}
-    </Flexbox>
-  </Layout>
-)
+const Teams = ({ teams }) => {
+  const [competition, setCompetition] = useState([])
+  const [competitionLoading, setCompetitionLoading] = useState(true)
+  const [competitionError, setCompetitionError] = useState(null)
 
-export async function getStaticProps() {
-  const [teams, players, weapons] = await Promise.all([
-    fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/teams`, {
-      headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((teams) =>
-        teams.records.map((team) => ({
-          ...team,
-          ...team.fields,
-        }))
-      ),
-    fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/players`, {
-      headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((players) =>
-        players.records.map((player) => ({
-          ...player,
-          ...player.fields,
-        }))
-      ),
-    fetch(`https://api.airtable.com/v0/${process.env.DATABASE_ID}/weapons`, {
-      headers: {
-        Authorization: `Bearer ${process.env.DATABASE_AUTH_TOKEN}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((weapons) =>
-        weapons.records.map((weapon) => ({
-          ...weapon,
-          ...weapon.fields,
-        }))
-      ),
-  ])
+  useEffect(() => {
+    fetch('/api/competitions/298576443412054533')
+      .then(res => (res.ok ? res.json() : res.json().then(Promise.reject)))
+      .then(competition => {
+        setCompetition(competition)
+        setCompetitionLoading(false)
+      })
+      .catch(error => {
+        setCompetitionError(error)
+        setCompetitionLoading(false)
+      })
+  }, [])
 
-  return {
-    props: {
-      teams: teams.map((team) => ({
-        ...team,
-        players: (team.players || [])
-          .map((id) => players.find((player) => player.id === id))
-          .map((player) => ({
-            ...player,
-            weapons: (player.fields.weapons || []).map((id) =>
-              weapons.find((weapon) => weapon.id === id)
-            ),
-            team: null,
-          })),
-      })),
-    },
-  }
+  return (
+    <Layout>
+      <Flexbox direction="column" gap="large">
+        {competitionLoading && <Loading label="Loading teams" />}
+        {!competitionLoading &&
+          !competitionError &&
+          competition.teams
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(team => <LargeTeam key={team.id} team={team} />)}
+      </Flexbox>
+    </Layout>
+  )
 }
 
 export default Teams

@@ -9,9 +9,17 @@
   },
   "dependencies": {
     "dystopia": "0.0.2",
+    "cookie": "^0.4.1",
+    "graphql": "^15.5.0",
+    "jsonwebtoken": "^8.5.1",
     "next": "10.2.0",
+    "next-connect": "^0.10.1",
+    "passport": "^0.4.1",
+    "passport-steam": "^1.0.15",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-flow-renderer": "^9.5.3"
+    "react-flow-renderer": "^9.5.3",
+    "slugify": "^1.5.1",
+    "zustand": "^3.5.0"
   }
 }

@@ -1,0 +1,54 @@
+type User {
+  name: String!
+  avatar: String!
+  steamId: String!
+  admin: Boolean!
+  weapons: [Weapon!] @relation
+  teams: [Team!] @relation
+}
+
+type Weapon {
+  name: String!
+  users: [User!] @relation
+}
+
+type Team {
+  name: String!
+  color: String!
+  members: [User!] @relation
+  competitions: [Competition!] @relation
+  matches: [Match!] @relation(name: "team_matches")
+  wonMatches: [Match!] @relation(name: "winner")
+  lostMatches: [Match!] @relation(name: "looser")
+}
+
+type Competition {
+  name: String!
+  teams: [Team!] @relation
+  matches: [Match!] @relation
+  inscriptionsAllowed: Boolean!
+}
+
+type Map {
+  name: String!
+  matches: [Match!] @relation
+}
+
+type Match {
+  date: Time!
+  competition: Competition!
+  map: Map! @relation
+  teams: [Team!] @relation(name: "team_matches")
+  winner: Team @relation(name: "winner")
+  looser: Team @relation(name: "looser")
+  winnerMatch: Match @relation(name: "winner_match")
+  looserMatch: Match @relation(name: "looser_match")
+}
+
+type Query {
+  competitions: [Competition]
+  weapons: [Weapon]
+  users: [User]
+  maps: [Map]
+  findUserBySteamId(steamId: String!): User
+}
