@@ -42,7 +42,7 @@ export default async (request, response) => {
                           name: "${user.data.findUserBySteamId.name}"
                           avatar: "${user.data.findUserBySteamId.avatar}"
                           steamId: "${user.data.findUserBySteamId.steamId}"
-                          admin: "${user.data.findUserBySteamId.admin}"
+                          admin: ${user.data.findUserBySteamId.admin}
                           weapons: {
                               connect: [${weaponsToAdd.join(',')}]
                               disconnect: [${weaponsToRemove.join(',')}]
