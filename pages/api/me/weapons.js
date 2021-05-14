@@ -16,6 +16,7 @@ export default async (request, response) => {
                   steamId
                   name
                   avatar
+                  admin
                   weapons {
                       data {
                           _id
@@ -31,7 +32,7 @@ export default async (request, response) => {
               }
           }`
         )
-        .then(user =>
+        .then((user) =>
           fauna
             .query(
               `mutation {
@@ -41,6 +42,7 @@ export default async (request, response) => {
                           name: "${user.data.findUserBySteamId.name}"
                           avatar: "${user.data.findUserBySteamId.avatar}"
                           steamId: "${user.data.findUserBySteamId.steamId}"
+                          admin: "${user.data.findUserBySteamId.admin}"
                           weapons: {
                               connect: [${weaponsToAdd.join(',')}]
                               disconnect: [${weaponsToRemove.join(',')}]
@@ -57,11 +59,11 @@ export default async (request, response) => {
                   }
               }`
             )
-            .then(user =>
+            .then((user) =>
               response.status(200).json(user.data.updateUser.weapons)
             )
         )
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
           response.status(500).end()
         })
