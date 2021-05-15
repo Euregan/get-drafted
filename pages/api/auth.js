@@ -32,6 +32,7 @@ export default nextConnect()
                         steamId: "${steamUser._json.steamid}"
                         avatar: "${steamUser._json.avatarhash}"
                         admin: false
+                        decking: false
                     }) {name}
                 }`
               )

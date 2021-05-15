@@ -20,6 +20,7 @@ export default function handler(request, response) {
                                 _id
                                 name
                                 avatar
+                                decking
                                 weapons {
                                     data {
                                         _id
@@ -48,6 +49,7 @@ export default function handler(request, response) {
                                         _id
                                         name
                                         avatar
+                                        decking
                                     }
                                 }
                             }

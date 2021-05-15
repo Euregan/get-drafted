@@ -2,6 +2,7 @@ type User {
   name: String!
   avatar: String!
   steamId: String!
+  decking: Boolean!
   admin: Boolean!
   weapons: [Weapon!] @relation
   teams: [Team!] @relation

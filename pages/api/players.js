@@ -11,6 +11,7 @@ export default async (request, response) => {
                     name
                     avatar
                     steamId
+                    decking
                     weapons {
                         data {
                             _id

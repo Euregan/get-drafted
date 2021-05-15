@@ -16,7 +16,9 @@ const LargePlayer = ({ player }) => (
             <Flexbox direction="column" gap="small">
               <div>
                 <span>Decking</span>
-                <span>{player.decking ? 'true' : 'false'}</span>
+                <span className={player.decking ? 'true' : 'false'}>
+                  {player.decking ? 'true' : 'false'}
+                </span>
               </div>
               {player.weapons.map(weapon => (
                 <SmallWeapon key={weapon.id} weapon={weapon} />
@@ -25,6 +27,20 @@ const LargePlayer = ({ player }) => (
           </Flexbox>
         </Flexbox>
       </Card>
+      <style jsx>{`
+        .true,
+        .false {
+          margin-left: var(--padding);
+        }
+
+        .true {
+          color: var(--green);
+        }
+
+        .false {
+          color: var(--red);
+        }
+      `}</style>
     </a>
   </Link>
 )
