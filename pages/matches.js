@@ -31,9 +31,7 @@ const Matches = () => {
               (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
             )
             .map(match => (
-              <div key={match.id}>
-                <LargeMatch match={match} />
-              </div>
+              <LargeMatch key={match.id} match={match} />
             ))}
         </Flexbox>
       )}
