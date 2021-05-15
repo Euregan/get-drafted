@@ -20,6 +20,12 @@ export default function handler(request, response) {
                                 _id
                                 name
                                 avatar
+                                weapons {
+                                    data {
+                                        _id
+                                        name
+                                    }
+                                }
                             }
                         }
                     }
@@ -60,7 +66,11 @@ export default function handler(request, response) {
             id: team._id,
             players: team.members.data.map(player => ({
               ...player,
-              id: player._id
+              id: player._id,
+              weapons: player.weapons.data.map(weapon => ({
+                ...weapon,
+                id: weapon._id
+              }))
             }))
           })),
           matches: result.data.findCompetitionByID.matches.data.map(match => ({

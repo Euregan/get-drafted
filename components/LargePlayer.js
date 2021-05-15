@@ -13,54 +13,17 @@ const LargePlayer = ({ player }) => (
         <Flexbox direction="column" gap="small">
           <Flexbox direction="row" gap="small">
             <Avatar user={player} size="large" />
-            <ul className="details">
-              <li className={'detail ' + (player.decking ? 'true' : 'false')}>
-                <span className="label">Decking</span>
-                <span className="data">
-                  {player.decking ? 'true' : 'false'}
-                </span>
-              </li>
-              <li className={'detail ' + (player.main ? 'true' : 'false')}>
-                <span className="label">Player</span>
-                <span className="data">{player.main ? 'true' : 'false'}</span>
-              </li>
-              <li
-                className={'detail ' + (player.substitute ? 'true' : 'false')}
-              >
-                <span className="label">Substitute</span>
-                <span className="data">
-                  {player.substitute ? 'true' : 'false'}
-                </span>
-              </li>
-            </ul>
-          </Flexbox>
-          <Flexbox direction="column" gap="small">
-            {player.weapons.map(weapon => (
-              <SmallWeapon key={weapon.id} weapon={weapon} />
-            ))}
+            <Flexbox direction="column" gap="small">
+              <div>
+                <span>Decking</span>
+                <span>{player.decking ? 'true' : 'false'}</span>
+              </div>
+              {player.weapons.map(weapon => (
+                <SmallWeapon key={weapon.id} weapon={weapon} />
+              ))}
+            </Flexbox>
           </Flexbox>
         </Flexbox>
-        <style jsx>{`
-          .details {
-            display: flex;
-            flex-direction: column;
-            gap: var(--padding);
-            text-transform: uppercase;
-          }
-
-          .details li {
-            display: flex;
-            gap: var(--padding);
-          }
-
-          .true .data {
-            color: var(--green);
-          }
-
-          .false .data {
-            color: var(--red);
-          }
-        `}</style>
       </Card>
     </a>
   </Link>

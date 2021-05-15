@@ -81,8 +81,9 @@ export default async (request, response) => {
         const weapons = faunaWeapons.map(weapon => ({
           faunaName: weapon.name,
           faunaId: weapon._id,
-          airtableId: airtableWeapons.find(
-            airWeapon => airWeapon.name === weapon.name
+          airtableId: (
+            airtableWeapons.find(airWeapon => airWeapon.name === weapon.name) ||
+            {}
           ).id
         }))
 

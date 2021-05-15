@@ -27,7 +27,9 @@ const Matches = () => {
       {!competitionLoading && !competitionError && (
         <Flexbox direction="column" gap="large">
           {competition.matches
-            .sort((a, b) => new Date(a.date) > new Date(b.date))
+            .sort(
+              (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+            )
             .map(match => (
               <div key={match.id}>
                 <LargeMatch match={match} />
