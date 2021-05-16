@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Card, Flexbox } from 'dystopia'
 import SmallWeapon from '../components/SmallWeapon'
+import Cyberdeck from '../components/icon/Cyberdeck'
 import Avatar from '../components/Avatar'
 
 const LargePlayer = ({ player }) => (
@@ -14,13 +15,13 @@ const LargePlayer = ({ player }) => (
           <Flexbox direction="row" gap="small">
             <Avatar user={player} size="large" />
             <Flexbox direction="column" gap="small">
-              <div>
-                <span>Decking</span>
-                <span className={player.decking ? 'true' : 'false'}>
-                  {player.decking ? 'true' : 'false'}
-                </span>
-              </div>
-              {player.weapons.map(weapon => (
+              {player.decking && (
+                <Flexbox direction="row" gap="small">
+                  <Cyberdeck color="white" size="small" />
+                  <span>Decker</span>
+                </Flexbox>
+              )}
+              {player.weapons.map((weapon) => (
                 <SmallWeapon key={weapon.id} weapon={weapon} />
               ))}
             </Flexbox>
@@ -28,17 +29,7 @@ const LargePlayer = ({ player }) => (
         </Flexbox>
       </Card>
       <style jsx>{`
-        .true,
-        .false {
-          margin-left: var(--padding);
-        }
-
-        .true {
-          color: var(--green);
-        }
-
-        .false {
-          color: var(--red);
+        .decking {
         }
       `}</style>
     </a>

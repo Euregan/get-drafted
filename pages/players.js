@@ -20,23 +20,23 @@ const Players = () => {
 
   useEffect(() => {
     fetch('/api/weapons')
-      .then(res => (res.ok ? res.json() : res.json().then(Promise.reject)))
-      .then(weapons => {
+      .then((res) => (res.ok ? res.json() : res.json().then(Promise.reject)))
+      .then((weapons) => {
         setWeapons(weapons)
         setWeaponsLoading(false)
       })
-      .catch(error => {
+      .catch((error) => {
         setWeaponsError(error)
         setWeaponsLoading(false)
       })
 
     fetch('/api/players')
-      .then(res => (res.ok ? res.json() : res.json().then(Promise.reject)))
-      .then(players => {
+      .then((res) => (res.ok ? res.json() : res.json().then(Promise.reject)))
+      .then((players) => {
         setPlayers(players)
         setPlayersLoading(false)
       })
-      .catch(error => {
+      .catch((error) => {
         setPlayersError(error)
         setPlayersLoading(false)
       })
@@ -52,23 +52,13 @@ const Players = () => {
               <input
                 type="text"
                 value={nameFilter}
-                onChange={event => setNameFilter(event.target.value)}
+                onChange={(event) => setNameFilter(event.target.value)}
               />
             </label>
             <Checkbox
               label="Decking"
               value={deckingFilter}
               onChange={setDeckingFilter}
-            />
-            <Checkbox
-              label="Player"
-              value={playerFilter}
-              onChange={setPlayerFilter}
-            />
-            <Checkbox
-              label="Substitute"
-              value={substituteFilter}
-              onChange={setSubstituteFilter}
             />
             {weaponsLoading && <Loading label="Loading weapons" />}
             {!weaponsLoading && (
@@ -86,22 +76,22 @@ const Players = () => {
             {playersLoading && <Loading label="Loading players" />}
             {players
               .filter(
-                player =>
+                (player) =>
                   nameFilter === '' ||
                   player.name.toLowerCase().includes(nameFilter.toLowerCase())
               )
-              .filter(player => !deckingFilter || player.decking)
-              .filter(player => !playerFilter || player.main)
-              .filter(player => !substituteFilter || player.substitute)
+              .filter((player) => !deckingFilter || player.decking)
+              .filter((player) => !playerFilter || player.main)
+              .filter((player) => !substituteFilter || player.substitute)
               .filter(
-                player =>
+                (player) =>
                   weaponsFilter.length === 0 ||
-                  player.weapons.some(weapon =>
-                    weaponsFilter.map(weapon => weapon.id).includes(weapon.id)
+                  player.weapons.some((weapon) =>
+                    weaponsFilter.map((weapon) => weapon.id).includes(weapon.id)
                   )
               )
               .sort((a, b) => a.name.localeCompare(b.name))
-              .map(player => (
+              .map((player) => (
                 <div key={player.id}>
                   <LargePlayer player={player} />
                 </div>
